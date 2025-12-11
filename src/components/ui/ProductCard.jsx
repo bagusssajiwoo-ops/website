@@ -4,41 +4,46 @@ import { FiShoppingBag, FiHeart } from 'react-icons/fi';
 import { whatsappConfig } from '../../data/config';
 
 const ProductCard = ({ product }) => {
-    const handleWhatsAppClick = (e) => {
-        e.preventDefault();
-        const message = whatsappConfig.generateProductMessage(product.name, product.price);
-        whatsappConfig.openWhatsApp(message);
-    };
+  const handleWhatsAppClick = (e) => {
+    e.preventDefault();
+    const message = whatsappConfig.generateProductMessage(
+      product.name,
+      product.price,
+      product.image,
+      product.description
+    );
+    whatsappConfig.openWhatsApp(message);
+  };
 
-    return (
-        <motion.div
-            className="product-card"
-            whileHover={{ y: -10 }}
-            transition={{ type: "spring", stiffness: 300 }}
-        >
-            <div className="product-image">
-                <img src={product.image} alt={product.name} loading="lazy" />
-                <div className="product-actions">
-                    <button
-                        onClick={handleWhatsAppClick}
-                        aria-label="Pre Order via WhatsApp"
-                        className="btn-whatsapp"
-                    >
-                        <FiShoppingBag /> Pre Order
-                    </button>
-                    <button aria-label="Add to Wishlist" className="btn-wishlist">
-                        <FiHeart />
-                    </button>
-                </div>
-            </div>
-            <div className="product-info">
-                <span className="category">{product.category}</span>
-                <h3>{product.name}</h3>
-                <p className="description">{product.description}</p>
-                <span className="price">{product.price}</span>
-            </div>
+  return (
+    <motion.div
+      className="product-card"
+      whileHover={{ y: -10 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
+      <div className="product-image">
+        <img src={product.image} alt={product.name} loading="lazy" />
+        <div className="product-actions">
+          <button
+            onClick={handleWhatsAppClick}
+            aria-label="Pre Order via WhatsApp"
+            className="btn-whatsapp"
+          >
+            <FiShoppingBag /> Pre Order
+          </button>
+          <button aria-label="Add to Wishlist" className="btn-wishlist">
+            <FiHeart />
+          </button>
+        </div>
+      </div>
+      <div className="product-info">
+        <span className="category">{product.category}</span>
+        <h3>{product.name}</h3>
+        <p className="description">{product.description}</p>
+        <span className="price">{product.price}</span>
+      </div>
 
-            <style>{`
+      <style>{`
         .product-card {
           background: white;
           cursor: pointer;
@@ -168,8 +173,8 @@ const ProductCard = ({ product }) => {
           }
         }
       `}</style>
-        </motion.div>
-    );
+    </motion.div>
+  );
 };
 
 export default ProductCard;

@@ -7,17 +7,22 @@ export const whatsappConfig = {
     defaultMessage: "Halo, saya ingin bertanya tentang produk furniture Anda.",
 
     // Fungsi untuk generate pesan produk
-    generateProductMessage: (productName, productPrice) => {
+    generateProductMessage: (productName, productPrice, productImage, productDescription) => {
         return `Halo Admin LuxeLiving,
 
 Saya tertarik dengan produk:
 📦 *${productName}*
+📝 ${productDescription}
 💰 Harga: ${productPrice}
+
+🖼️ Lihat Gambar Produk:
+${productImage}
 
 Mohon informasi lebih lanjut mengenai:
 - Ketersediaan stok
 - Detail spesifikasi
 - Proses pemesanan
+- Estimasi waktu pengiriman
 
 Terima kasih!`;
     },
