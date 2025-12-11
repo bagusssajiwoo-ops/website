@@ -18,6 +18,7 @@ import Dashboard from './pages/admin/Dashboard';
 import ProductList from './pages/admin/Products/ProductList';
 import AddProduct from './pages/admin/Products/AddProduct';
 import EditProduct from './pages/admin/Products/EditProduct';
+import CategoryList from './pages/admin/Categories/CategoryList';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Home Page Component
@@ -73,6 +74,14 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <EditProduct />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/categories"
+                    element={
+                        <ProtectedRoute>
+                            <CategoryList />
                         </ProtectedRoute>
                     }
                 />

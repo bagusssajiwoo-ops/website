@@ -1,59 +1,60 @@
 // Admin Sidebar Navigation
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FiGrid, FiPackage, FiLogOut, FiHome } from 'react-icons/fi';
+import { FiGrid, FiPackage, FiLogOut, FiHome, FiTag } from 'react-icons/fi';
 import { logoutUser } from '../../services/auth';
 import { toast } from 'react-toastify';
 
 const Sidebar = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        const result = await logoutUser();
-        if (result.success) {
-            toast.success('Logout berhasil!');
-            navigate('/admin/login');
-        }
-    };
+  const handleLogout = async () => {
+    const result = await logoutUser();
+    if (result.success) {
+      toast.success('Logout berhasil!');
+      navigate('/admin/login');
+    }
+  };
 
-    const menuItems = [
-        { path: '/admin/dashboard', icon: <FiGrid />, label: 'Dashboard' },
-        { path: '/admin/products', icon: <FiPackage />, label: 'Products' },
-    ];
+  const menuItems = [
+    { path: '/admin/dashboard', icon: <FiGrid />, label: 'Dashboard' },
+    { path: '/admin/products', icon: <FiPackage />, label: 'Products' },
+    { path: '/admin/categories', icon: <FiTag />, label: 'Categories' },
+  ];
 
-    return (
-        <div className="sidebar">
-            <div className="sidebar-header">
-                <h2>LuxeLiving</h2>
-                <p>Admin Panel</p>
-            </div>
+  return (
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <h2>LuxeLiving</h2>
+        <p>Admin Panel</p>
+      </div>
 
-            <nav className="sidebar-nav">
-                {menuItems.map((item) => (
-                    <Link
-                        key={item.path}
-                        to={item.path}
-                        className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
-                    >
-                        {item.icon}
-                        <span>{item.label}</span>
-                    </Link>
-                ))}
-            </nav>
+      <nav className="sidebar-nav">
+        {menuItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </Link>
+        ))}
+      </nav>
 
-            <div className="sidebar-footer">
-                <a href="/" target="_blank" rel="noopener noreferrer" className="nav-item">
-                    <FiHome />
-                    <span>View Website</span>
-                </a>
-                <button onClick={handleLogout} className="nav-item logout-btn">
-                    <FiLogOut />
-                    <span>Logout</span>
-                </button>
-            </div>
+      <div className="sidebar-footer">
+        <a href="/" target="_blank" rel="noopener noreferrer" className="nav-item">
+          <FiHome />
+          <span>View Website</span>
+        </a>
+        <button onClick={handleLogout} className="nav-item logout-btn">
+          <FiLogOut />
+          <span>Logout</span>
+        </button>
+      </div>
 
-            <style>{`
+      <style>{`
         .sidebar {
           width: 250px;
           height: 100vh;
@@ -146,8 +147,8 @@ const Sidebar = () => {
           }
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Sidebar;
