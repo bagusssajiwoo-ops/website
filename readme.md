@@ -1,349 +1,244 @@
-# Dokumentasi Website Jati Prime
+# 🪑 LuxeLiving - Website Furniture Premium
 
-## 📋 Daftar Isi
-- [Ringkasan Proyek](#-ringkasan-proyek)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
-- [Struktur Proyek](#-struktur-proyek)
-- [Komponen Website](#-komponen-website)
-- [Fitur Utama](#-fitur-utama)
-- [Cara Menjalankan Proyek](#-cara-menjalankan-proyek)
-- [Panduan Pengembangan](#-panduan-pengembangan)
-- [Informasi Kontak](#-informasi-kontak)
+Website katalog furniture modern dan elegan dengan integrasi WhatsApp untuk kemudahan pemesanan.
 
 ---
 
-## 🎯 Ringkasan Proyek
+## 🎯 Fitur Utama
 
-**Jati Prime** adalah website katalog online untuk toko mebel yang berbasis di Jepara, Jawa Tengah. Website ini menampilkan berbagai produk furniture berkualitas tinggi yang terbuat dari kayu jati solid Perhutani dan kayu jati daur ulang.
+### ✅ Katalog Produk Interaktif
+- **9 Produk Unggulan** dengan gambar berkualitas tinggi
+- **Kategori Terorganis**: Sofa, Meja, Kursi, Tempat Tidur, Lemari, Lampu
+- **Detail Lengkap**: Nama, kategori, harga, dan deskripsi produk
 
-### Tujuan Website:
-- Menampilkan katalog produk furniture premium
-- Memberikan informasi lengkap tentang perusahaan dan kualitas produk
-- Memudahkan calon pembeli untuk menghubungi penjual melalui WhatsApp
-- Menampilkan lokasi workshop/toko
+### 📱 Integrasi WhatsApp
+- **Floating WhatsApp Button** yang selalu terlihat
+- **Pre-Order per Produk**: Setiap produk memiliki tombol "Pre Order"
+- **Template Pesan Otomatis**: Langsung kirim detail produk ke admin
+- **Format Pesan**:
+  ```
+  Halo Admin LuxeLiving,
+  
+  Saya tertarik dengan produk:
+  📦 *[Nama Produk]*
+  💰 Harga: [Harga]
+  
+  Mohon informasi lebih lanjut...
+  ```
+
+### 🎨 Design Premium
+- **Animasi Smooth** menggunakan Framer Motion
+- **Hover Effects** yang menarik pada setiap card
+- **Responsive** di semua ukuran layar
+- **Typography Premium**: Playfair Display & Outfit
+
+---
+
+## 📁 Struktur Project
+
+```
+src/
+├── components/
+│   ├── layout/              # Komponen layout
+│   │   ├── Navbar.jsx      # Navigation bar
+│   │   └─── Footer.jsx      # Footer
+│   ├── sections/            # Section halaman
+│   │   ├── Hero.jsx        # Hero banner
+│   │   ├── Categories.jsx  # Showcase kategori
+│   │   ├── FeaturedProducts.jsx  # Grid produk
+│   │   └── Contact.jsx     # Informasi kontak
+│   └── ui/                  # Komponen UI reusable
+│       ├── ProductCard.jsx # Card produk
+│       ├── CategoryCard.jsx # Card kategori
+│       └── WhatsAppButton.jsx # Floating WA button
+├── data/                    # Data statis
+│   ├── products.js         # Data 9 produk
+│   ├── categories.js       # Data 6 kategori
+│   └── config.js           # Konfigurasi WhatsApp
+├── App.jsx                 # Komponen utama
+├── main.jsx                # Entry point
+└── index.css               # Global styles
+```
 
 ---
 
 ## 🛠 Teknologi yang Digunakan
 
-### Frontend Framework & Library:
-- **React** (v18.2.0) - Library JavaScript untuk membangun user interface
-- **Vite** (v4.4.5) - Build tool modern untuk development yang cepat
-- **Framer Motion** (v10.16.4) - Library animasi untuk transisi dan efek halus
-- **React Icons** (v4.10.1) - Library icon SVG untuk React
-
-### Bahasa & Styling:
-- **JavaScript (JSX)** - Bahasa pemrograman utama
-- **CSS** - Styling dengan custom properties (CSS variables)
-- **Google Fonts** - Tipografi: Outfit & Playfair Display
-
-### Tools Development:
-- **ESLint** - Linter untuk menjaga kualitas kode
-- **npm** - Package manager
+- **React** 18.2.0 - Library UI
+- **Vite** 4.4.5 - Build tool modern
+- **Framer Motion** 10.16.4 - Animasi
+- **React Icons** 4.10.1 - Icon library
+- **Vanilla CSS** - Styling dengan CSS Variables
 
 ---
 
-## 📁 Struktur Proyek
+## 🚀 Cara Menjalankan Project
 
+### 1. Install Dependencies
+```bash
+npm install
 ```
-haje/
-├── dist/                    # Folder hasil build production (generated)
-├── node_modules/            # Dependencies (generated)
-├── src/                     # Source code utama
-│   ├── components/          # Komponen React
-│   │   ├── About.jsx       # Komponen "Tentang Kami"
-│   │   ├── Footer.jsx      # Footer website
-│   │   ├── Hero.jsx        # Banner utama/hero section
-│   │   ├── Location.jsx    # Peta lokasi Google Maps
-│   │   ├── Navbar.jsx      # Navigation bar
-│   │   ├── ProductGrid.jsx # Grid katalog produk
-│   │   └── Profile.jsx     # Profil perusahaan detail
-│   ├── App.jsx             # Komponen utama aplikasi
-│   ├── main.jsx            # Entry point aplikasi
-│   └── index.css           # Styling global
-├── index.html              # HTML template
-├── package.json            # Dependencies dan scripts
-├── vite.config.js          # Konfigurasi Vite
-└── DOKUMENTASI.md          # File dokumentasi ini
+
+### 2. Jalankan Development Server
+```bash
+npm run dev
+```
+Website akan berjalan di `http://localhost:5173`
+
+### 3. Build untuk Production
+```bash
+npm run build
+```
+
+### 4. Preview Production Build
+```bash
+npm run preview
 ```
 
 ---
 
-## 🧩 Komponen Website
+## 📞 Konfigurasi WhatsApp
 
-### 1. **Navbar** (`Navbar.jsx`)
-Navigasi bar di bagian atas halaman yang berisi:
-- Logo "Jati Prime"
-- Menu navigasi: Home, Katalog, Tentang, Profile, Lokasi
-- Tombol "Hubungi Kami" yang terhubung ke WhatsApp
-- Responsive mobile menu (hamburger menu)
-
-**Fitur Khusus:**
-- Sticky navbar (tetap terlihat saat scroll)
-- Background blur efek saat di-scroll
-- Animasi smooth scroll ke section
-
-### 2. **Hero** (`Hero.jsx`)
-Banner utama halaman yang menampilkan:
-- Background gambar furniture berkualitas tinggi
-- Tagline: "Jati Prime Berkualitas 100% Terpercaya"
-- Subtitle: "Kualitas Export & Harga Bersahabat"
-- Call-to-action button "Lihat Katalog"
-
-**Fitur Khusus:**
-- Animasi fade-in menggunakan Framer Motion
-- Gradient overlay untuk keterbacaan teks
-- Responsive design
-
-### 3. **ProductGrid** (`ProductGrid.jsx`)
-Grid katalog produk yang menampilkan 6 produk unggulan:
-1. Meja Kerja Kantor Klasik Mewah (Rp 5.500.000)
-2. Meja Kantor Ukir Mewah Kayu Jati (Rp 6.200.000)
-3. Kitchen Set Mewah Letter L (Rp 12.000.000)
-4. Sofa Tamu Mewah Klasik (Rp 8.500.000)
-5. Tempat Tidur Ukir Jepara (Rp 7.800.000)
-6. Lemari Pakaian Jati 4 Pintu (Rp 9.000.000)
-
-**Fitur Khusus:**
-- Hover efek: gambar zoom-in dan menampilkan tombol aksi
-- Klik pada produk langsung membuka WhatsApp dengan template pesan
-- Grid responsif (auto-fill layout)
-- Animasi smooth menggunakan Framer Motion
-
-**Integrasi WhatsApp:**
-```
-Nomor: 6282330302593
-Template: "Halo, saya tertarik dengan produk [Nama Produk]"
-```
-
-### 4. **About** (`About.jsx`)
-Bagian "Tentang Kami" yang menjelaskan:
-- Deskripsi singkat tentang Jati Prime
-- Fokus pada kualitas kayu jati Perhutani
-- Pengalaman dan keahlian dalam permebelan
-
-**Fitur Khusus:**
-- Marquee scrolling text untuk menampilkan komitmen perusahaan
-- Animasi fade-in saat scroll ke section
-- Underline accent styling
-
-**Komitmen yang ditampilkan:**
-- Menggunakan kayu jati legal dan berkualitas tinggi
-- Memberikan detail pengerjaan terbaik
-- Menghadirkan desain modern, elegan, dan tahan lama
-- Memberikan pelayanan profesional
-
-### 5. **Profile** (`Profile.jsx`)
-Profil perusahaan lengkap dengan informasi:
-
-**Informasi Perusahaan:**
-- Nama: JATI PRIME
-- Alamat: Jl. Sulaiman No. 24 RT 04/RW 01, Mlongan, Jepara, Jawa Tengah
-- Telepon: 0895-4225-32976, 0813-3344-1655
-- Email: jeparasolikin37@gmail.com
-- Website: www.jatiprime.go.id
-- Kode Pos: 59421
-
-**Material & Kualitas:**
-- Kayu Jati Solid (Perhutani)
-- Kayu Jati Daur Ulang
-- Grade: A & B
-- Kualitas: Ekspor dengan Garansi 100%
-
-**Kapasitas & Produksi:**
-- Kapasitas: 6 kontainer 40 ft per bulan
-- Gudang: 3500 m²
-- Pasar: Worldwide (Seluruh Dunia)
-- Packing: Karton Box, Single Face / Kertas Wrapping
-
-**Pembayaran & Garansi:**
-- Deposit: 50% di awal
-- Pelunasan: 50% sebelum kirim
-- Waktu Produksi: ± 2 bulan setelah deposit
-- Garansi: Ganti baru gratis jika rusak saat diterima
-
-### 6. **Location** (`Location.jsx`)
-Section yang menampilkan lokasi toko/workshop:
-- Google Maps embed (iframe)
-- Informasi alamat workshop
-- Tombol "Buka di Google Maps"
-
-**Lokasi:**
-- Jaya Jati Makmur, Jepara, Jawa Tengah
-
-### 7. **Footer** (`Footer.jsx`)
-Footer website dengan informasi:
-- Copyright information
-- Link sosial media atau kontak tambahan (jika ada)
-
----
-
-## ✨ Fitur Utama
-
-### 1. **Responsif & Mobile-Friendly**
-- Layout otomatis menyesuaikan dengan ukuran layar
-- Mobile menu untuk navigasi di perangkat kecil
-- Grid produk responsif
-
-### 2. **Animasi & Interaktivitas**
-- Smooth scroll navigation
-- Hover effects pada produk
-- Fade-in animations menggunakan Framer Motion
-- Marquee text animation
-- Sticky navbar dengan blur effect
-
-### 3. **Integrasi WhatsApp**
-- Direct link ke WhatsApp dari tombol "Hubungi Kami"
-- Template pesan otomatis saat klik produk
-- Nomor WhatsApp: +62 823-3030-2593
-
-### 4. **SEO-Friendly**
-- Title tag: "Jati Prime - Toko Online Mebel Jepara Terpercaya 100%"
-- Semantic HTML structure
-- Meta viewport untuk mobile optimization
-- Font preconnect untuk performance
-
-### 5. **Peta Lokasi Interaktif**
-- Google Maps terintegrasi
-- Menampilkan lokasi Jaya Jati Makmur, Jepara
-- Link langsung ke Google Maps
-
----
-
-## 🚀 Cara Menjalankan Proyek
-
-### Prasyarat:
-- **Node.js** (versi 14 atau lebih baru)
-- **npm** (biasanya sudah terinstall dengan Node.js)
-
-### Langkah-langkah:
-
-1. **Buka Terminal/Command Prompt**
-   Navigasi ke folder proyek:
-   ```bash
-   cd c:\Users\bagus\haje
-   ```
-
-2. **Install Dependencies** (jika belum)
-   ```bash
-   npm install
-   ```
-
-3. **Jalankan Development Server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Buka Browser**
-   - Setelah perintah di atas dijalankan, akan muncul URL di terminal
-   - Biasanya: `http://localhost:5173`
-   - Buka URL tersebut di browser
-
-5. **Build untuk Production** (opsional)
-   ```bash
-   npm run build
-   ```
-   - Hasil build akan ada di folder `dist/`
-
-6. **Preview Build Production** (opsional)
-   ```bash
-   npm run preview
-   ```
-
----
-
-## 🔧 Panduan Pengembangan
-
-### Menambah Produk Baru
-
-Edit file `src/components/ProductGrid.jsx`:
+Edit file `src/data/config.js` untuk mengubah nomor WhatsApp:
 
 ```javascript
-const products = [
-  // ... produk yang sudah ada
+export const whatsappConfig = {
+  phoneNumber: "6282330302593",  // Ganti dengan nomor Anda
+  // ...
+};
+```
+
+---
+
+## 🎨 Customization
+
+### Mengubah Warna Brand
+Edit `src/index.css`:
+```css
+:root {
+  --color-primary: #2A2A2A;    /* Warna utama */
+  --color-accent: #D4A373;     /* Warna aksen/highlight */
+  --color-text: #1F1F1F;       /* Warna teks */
+}
+```
+
+### Menambah/Edit Produk
+Edit file `src/data/products.js`:
+```javascript
+export const products = [
   {
-    id: 7,  // ID unik, increment dari produk terakhir
-    name: "Nama Produk Baru",
+    id: 1,
+    name: "Nama Produk",
     category: "Kategori",
     price: "Rp X.XXX.XXX",
-    image: "URL_GAMBAR"
-  }
+    image: "URL_GAMBAR",
+    description: "Deskripsi produk"
+  },
+  // Tambah produk lainnya...
 ];
 ```
 
-### Mengubah Nomor WhatsApp
+### Menambah/Edit Kategori
+Edit file `src/data/categories.js`
 
-Edit file `src/components/Navbar.jsx` dan `src/components/ProductGrid.jsx`:
-- Cari: `6282330302593`
-- Ganti dengan nomor baru (format: 62XXXXXXXXXX)
+---
 
-### Mengubah Warna Brand
+## 📦 Deployment
 
-Edit file `src/index.css`, cari bagian CSS variables:
+### Deploy ke Vercel (Recommended)
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-```css
-:root {
-  --color-primary: #2D1F16;    /* Warna utama */
-  --color-accent: #C4A962;     /* Warna aksen */
-  --color-text: #333333;       /* Warna teks */
-  --color-text-light: #666666; /* Warna teks secondary */
-}
+# Login
+vercel login
+
+# Deploy
+vercel --prod
 ```
 
-### Mengubah Font
+Atau push ke GitHub dan import di [vercel.com](https://vercel.com)
 
-Edit file `index.html`, ganti link Google Fonts dan update di `src/index.css`:
-
-```css
-:root {
-  --font-heading: 'Playfair Display', serif;
-  --font-body: 'Outfit', sans-serif;
-}
-```
-
-### Mengubah Lokasi Google Maps
-
-Edit file `src/components/Location.jsx`:
-- Ganti parameter `q=` di URL iframe dengan nama lokasi baru
-- Update link Google Maps di tombol
+**Lihat panduan lengkap di**: `PANDUAN_DEPLOY.md`
 
 ---
 
-## 📞 Informasi Kontak
+## ✨ Fitur Detail
 
-**Jati Prime**
-- **Alamat**: Jl. Sulaiman No. 24 RT 04/RW 01, Mlongan, Jepara, Jawa Tengah – Indonesia
-- **WhatsApp/Mobile**: 
-  - 0895-4225-32976
-  - 0813-3344-1655
-- **Email**: jeparasolikin37@gmail.com
-- **Website**: www.jatiprime.go.id
-- **Kode Pos**: 59421
+### 1. Product Card
+- Gambar produk dengan zoom effect saat hover
+- Badge kategori
+- Deskripsi produk
+- Harga dengan warna accent
+- Tombol "Pre Order" langsung ke WhatsApp
+- Tombol wishlist
 
----
+### 2. Category Showcase
+- 6 kategori furniture
+- Card dengan gambar dan icon
+- Click untuk scroll ke produk
+- Smooth animations
 
-## 📝 Catatan Tambahan
+### 3. WhatsApp Floating Button
+- Fixed di pojok kanan bawah
+- Pulse animation untuk menarik perhatian
+- Tooltip saat hover
+- Template pesan otomatis
 
-### Performa Website:
-- Menggunakan lazy loading untuk Google Maps
-- Image optimization dari Unsplash
-- Minified code saat production build
-- Preconnect untuk Google Fonts
-
-### Browser Support:
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-### Maintenance:
-- Update dependencies secara berkala: `npm update`
-- Check security vulnerabilities: `npm audit`
-- Test di berbagai device dan browser
+### 4. Contact Section
+- Informasi lengkap kontak
+- Jam operasional
+- Tombol direct ke WhatsApp
+- Grid responsive
 
 ---
 
-**Versi Dokumentasi**: 1.0  
-**Tanggal**: Desember 2025  
-**Dibuat untuk**: Jati Prime - Mebel Jepara
+## 🎯 User Flow
+
+1. **User membuka website** → Lihat Hero banner
+2. **Scroll ke bawah** → Lihat kategori produk
+3. **Klik kategori** → Auto-scroll ke daftar produk
+4. **Pilih produk** → Klik tombol "Pre Order"
+5. **Redirect ke WhatsApp** → Pesan otomatis terisi dengan detail produk
+6. **Chat dengan admin** → Lanjutkan komunikasi untuk pemesanan
+
+---
+
+## � Browser Support
+
+- ✅ Chrome (Recommended)
+- ✅ Firefox
+- ✅ Safari
+- ✅ Edge
+- ✅ Mobile Browsers
+
+---
+
+## 📝 Update Log
+
+**Version 2.0** (Latest)
+- ✅ Restructure folder (layout/, sections/, ui/, data/)
+- ✅ WhatsApp integration (floating button + per produk)
+- ✅ Categories showcase section
+- ✅ Contact section dengan info lengkap
+- ✅ Separate data files untuk maintenance mudah
+- ✅ Enhanced product cards
+- ✅ Improved responsive design
+
+**Version 1.0**
+- Basic catalog website
+- Hero section
+- Product grid
+- Footer
+
+---
+
+## 🤝 Support
+
+Untuk pertanyaan atau bantuan:
+- WhatsApp: +62 823-3030-2593
+- Email: support@luxeliving.com
+
+---
+
+**Dibuat dengan ❤️ menggunakan React + Vite**

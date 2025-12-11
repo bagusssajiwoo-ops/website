@@ -17,16 +17,14 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-content">
         <div className="logo">
-          <a href="/">Jati Prime.</a>
+          <a href="/">LuxeLiving.</a>
         </div>
 
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <a href="#home" onClick={() => setMenuOpen(false)}>Beranda</a>
-          <a href="#katalog" onClick={() => setMenuOpen(false)}>Katalog</a>
-          <a href="#profile" onClick={() => setMenuOpen(false)}>Profil</a>
-          <a href="#tentang" onClick={() => setMenuOpen(false)}>Tentang Kami</a>
-          <a href="#bantuan" onClick={() => setMenuOpen(false)}>Bantuan</a>
-          <a href="#kontak" onClick={() => setMenuOpen(false)}>Kontak</a>
+          <a href="#home" onClick={() => setMenuOpen(false)}>Home</a>
+          <a href="#categories" onClick={() => setMenuOpen(false)}>Kategori</a>
+          <a href="#collection" onClick={() => setMenuOpen(false)}>Produk</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>Kontak</a>
         </div>
 
         <div className="nav-icons">
