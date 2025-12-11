@@ -1,7 +1,7 @@
 // Konfigurasi WhatsApp
 export const whatsappConfig = {
     // Nomor WhatsApp admin (format internasional tanpa +)
-    phoneNumber: "6282330302593",
+    phoneNumber: "62895422532976",
 
     // Template pesan default
     defaultMessage: "Halo, saya ingin bertanya tentang produk furniture Anda.",
