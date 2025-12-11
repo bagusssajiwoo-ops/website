@@ -1,10 +1,54 @@
-import React from 'react';
-import { products } from '../../data/products';
+// Featured Products - Load dari Firestore (REAL-TIME)
+import React, { useState, useEffect } from 'react';
 import ProductCard from '../ui/ProductCard';
+import { getAllProducts } from '../../services/productService';
 
 const FeaturedProducts = () => {
-  // Tampilkan 9 produk pertama
-  const featuredProducts = products.slice(0, 9);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    setLoading(true);
+    const result = await getAllProducts();
+    if (result.success) {
+      // Ambil max 9 produk untuk featured
+      setProducts(result.products.slice(0, 9));
+    } else {
+      console.error('Error loading products:', result.error);
+      setProducts([]);
+    }
+    setLoading(false);
+  };
+
+  if (loading) {
+    return (
+      <section className="section-padding" id="collection">
+        <div className="container">
+          <div className="section-header">
+            <h2>Produk Unggulan</h2>
+            <p>Loading products...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <section className="section-padding" id="collection">
+        <div className="container">
+          <div className="section-header">
+            <h2>Produk Unggulan</h2>
+            <p>Belum ada produk. Silakan tambahkan produk melalui admin panel.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="section-padding" id="collection">
@@ -15,7 +59,7 @@ const FeaturedProducts = () => {
         </div>
 
         <div className="product-grid">
-          {featuredProducts.map(product => (
+          {products.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
