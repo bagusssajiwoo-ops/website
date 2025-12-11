@@ -5,6 +5,7 @@ import { FiUpload, FiSave, FiX } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import Sidebar from '../../../components/admin/Sidebar';
 import { getProductById, updateProduct, uploadProductImage } from '../../../services/productService';
+import { getAllCategories } from '../../../services/categoryService';
 
 const EditProduct = () => {
     const { id } = useParams();
@@ -13,6 +14,7 @@ const EditProduct = () => {
     const [loadingProduct, setLoadingProduct] = useState(true);
     const [imagePreview, setImagePreview] = useState(null);
     const [imageFile, setImageFile] = useState(null);
+    const [categories, setCategories] = useState([]);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -22,11 +24,27 @@ const EditProduct = () => {
         image: ''
     });
 
-    const categories = ['Sofa', 'Meja', 'Kursi', 'Tempat Tidur', 'Lemari', 'Lampu'];
-
     useEffect(() => {
         loadProduct();
+        loadCategories();
     }, [id]);
+
+    const loadCategories = async () => {
+        const result = await getAllCategories();
+        if (result.success) {
+            setCategories(result.categories);
+        } else {
+            // Fallback
+            setCategories([
+                { id: '1', name: 'Sofa' },
+                { id: '2', name: 'Meja' },
+                { id: '3', name: 'Kursi' },
+                { id: '4', name: 'Tempat Tidur' },
+                { id: '5', name: 'Lemari' },
+                { id: '6', name: 'Lampu' }
+            ]);
+        }
+    };
 
     const loadProduct = async () => {
         const result = await getProductById(id);
@@ -197,7 +215,7 @@ const EditProduct = () => {
                                     >
                                         <option value="">Select Category</option>
                                         {categories.map((cat) => (
-                                            <option key={cat} value={cat}>{cat}</option>
+                                            <option key={cat.id} value={cat.name}>{cat.name}</option>
                                         ))}
                                     </select>
                                 </div>

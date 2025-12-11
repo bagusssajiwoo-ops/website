@@ -1,40 +1,62 @@
-import React from 'react';
-import { categories } from '../../data/categories';
+// Categories Section - Load dari Firestore (REAL-TIME)
+import React, { useState, useEffect } from 'react';
 import CategoryCard from '../ui/CategoryCard';
+import { getAllCategories } from '../../services/categoryService';
 
 const Categories = () => {
-    const handleCategoryClick = (category) => {
-        // Scroll ke section produk
-        const productSection = document.getElementById('collection');
-        if (productSection) {
-            productSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    setLoading(true);
+    const result = await getAllCategories();
+    if (result.success) {
+      // Ambil max 6 kategori untuk showcase
+      setCategories(result.categories.slice(0, 6));
+    } else {
+      console.error('Error loading categories:', result.error);
+      setCategories([]);
+    }
+    setLoading(false);
+  };
+
+  if (loading) {
     return (
-        <section className="categories-section section-padding" id="categories">
-            <div className="container">
-                <div className="section-header">
-                    <h2>Kategori Produk</h2>
-                    <p>Jelajahi koleksi furniture kami berdasarkan kategori</p>
-                </div>
+      <section className="section-padding">
+        <div className="container">
+          <div className="section-header">
+            <h2>Kategori Produk</h2>
+            <p>Loading categories...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
-                <div className="categories-grid">
-                    {categories.map(category => (
-                        <CategoryCard
-                            key={category.id}
-                            category={category}
-                            onClick={() => handleCategoryClick(category)}
-                        />
-                    ))}
-                </div>
-            </div>
+  if (categories.length === 0) {
+    return null; // Don't show section if no categories
+  }
 
-            <style>{`
-        .categories-section {
-          background: #f9f9f9;
-        }
+  return (
+    <section className="section-padding">
+      <div className="container">
+        <div className="section-header">
+          <h2>Kategori Produk</h2>
+          <p>Jelajahi koleksi furniture berdasarkan kategori</p>
+        </div>
 
+        <div className="categories-grid">
+          {categories.map(category => (
+            <CategoryCard key={category.id} category={category} />
+          ))}
+        </div>
+      </div>
+
+      <style>{`
         .section-header {
           text-align: center;
           margin-bottom: 4rem;
@@ -52,7 +74,7 @@ const Categories = () => {
 
         .categories-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 2rem;
         }
 
@@ -60,15 +82,21 @@ const Categories = () => {
           .section-header h2 {
             font-size: 2rem;
           }
-          
+
           .categories-grid {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
           }
         }
+
+        @media (max-width: 480px) {
+          .categories-grid {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
-        </section>
-    );
+    </section>
+  );
 };
 
 export default Categories;

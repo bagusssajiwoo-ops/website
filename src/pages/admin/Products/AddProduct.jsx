@@ -1,16 +1,18 @@
 // Add New Product Form - Improved UI
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiUpload, FiSave, FiX, FiImage, FiAlertCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import Sidebar from '../../../components/admin/Sidebar';
 import { addProduct, uploadProductImage } from '../../../services/productService';
+import { getAllCategories } from '../../../services/categoryService';
 
 const AddProduct = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -20,7 +22,27 @@ const AddProduct = () => {
     image: ''
   });
 
-  const categories = ['Sofa', 'Meja', 'Kursi', 'Tempat Tidur', 'Lemari', 'Lampu'];
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = async () => {
+    const result = await getAllCategories();
+    if (result.success) {
+      setCategories(result.categories);
+    } else {
+      console.error('Error loading categories:', result.error);
+      // Fallback ke default categories jika gagal load
+      setCategories([
+        { id: '1', name: 'Sofa' },
+        { id: '2', name: 'Meja' },
+        { id: '3', name: 'Kursi' },
+        { id: '4', name: 'Tempat Tidur' },
+        { id: '5', name: 'Lemari' },
+        { id: '6', name: 'Lampu' }
+      ]);
+    }
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -223,7 +245,7 @@ const AddProduct = () => {
                   >
                     <option value="">Select Category</option>
                     {categories.map((cat) => (
-                      <option key={cat} value={cat}>{cat}</option>
+                      <option key={cat.id} value={cat.name}>{cat.name}</option>
                     ))}
                   </select>
                 </div>
@@ -291,408 +313,408 @@ const AddProduct = () => {
       </div>
 
       <style>{`
-        .admin-content {
-          margin-left: 250px;
-          padding: 2rem;
-          min-height: 100vh;
-          background: #f5f7fa;
-        }
+  .admin - content {
+  margin - left: 250px;
+  padding: 2rem;
+  min - height: 100vh;
+  background: #f5f7fa;
+}
 
-        .page-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 2rem;
-        }
+        .page - header {
+  display: flex;
+  justify - content: space - between;
+  align - items: flex - start;
+  margin - bottom: 2rem;
+}
 
-        .page-header h1 {
-          font-size: 2rem;
-          color: #1a1a2e;
-          margin-bottom: 0.5rem;
-        }
+        .page - header h1 {
+  font - size: 2rem;
+  color: #1a1a2e;
+  margin - bottom: 0.5rem;
+}
 
         .subtitle {
-          color: #666;
-          font-size: 0.95rem;
-        }
+  color: #666;
+  font - size: 0.95rem;
+}
 
-        .btn-back {
-          padding: 0.75rem 1.5rem;
-          background: white;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          font-weight: 600;
-          color: #666;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
+        .btn - back {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border: 1px solid #ddd;
+  border - radius: 8px;
+  font - weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-        .btn-back:hover {
-          background: #f5f5f5;
-          border-color: #D4A373;
-          color: #D4A373;
-        }
+        .btn - back:hover {
+  background: #f5f5f5;
+  border - color: #D4A373;
+  color: #D4A373;
+}
 
-        .form-container {
-          background: white;
-          border-radius: 16px;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-          max-width: 900px;
-        }
+        .form - container {
+  background: white;
+  border - radius: 16px;
+  box - shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  max - width: 900px;
+}
 
-        .form-section {
-          padding: 2.5rem;
-          border-bottom: 1px solid #f0f0f0;
-        }
+        .form - section {
+  padding: 2.5rem;
+  border - bottom: 1px solid #f0f0f0;
+}
 
-        .form-section:last-of-type {
-          border-bottom: none;
-        }
+        .form - section: last - of - type {
+  border - bottom: none;
+}
 
-        .upload-section {
-          background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-        }
+        .upload - section {
+  background: linear - gradient(135deg, #f8f9fa 0 %, #fff 100 %);
+}
 
-        .section-header {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-          margin-bottom: 2rem;
-        }
+        .section - header {
+  display: flex;
+  align - items: flex - start;
+  gap: 1rem;
+  margin - bottom: 2rem;
+}
 
-        .section-header svg {
-          font-size: 1.5rem;
-          color: #D4A373;
-          margin-top: 0.25rem;
-        }
+        .section - header svg {
+  font - size: 1.5rem;
+  color: #D4A373;
+  margin - top: 0.25rem;
+}
 
-        .section-header h3 {
-          font-size: 1.25rem;
-          color: #1a1a2e;
-          margin-bottom: 0.25rem;
-        }
+        .section - header h3 {
+  font - size: 1.25rem;
+  color: #1a1a2e;
+  margin - bottom: 0.25rem;
+}
 
-        .section-header p {
-          color: #666;
-          font-size: 0.9rem;
-        }
+        .section - header p {
+  color: #666;
+  font - size: 0.9rem;
+}
 
-        .upload-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
+        .upload - wrapper {
+  display: flex;
+  flex - direction: column;
+  gap: 1.5rem;
+}
 
-        .upload-area {
-          border: 2px dashed #d0d0d0;
-          border-radius: 12px;
-          background: white;
-          transition: all 0.3s ease;
-        }
+        .upload - area {
+  border: 2px dashed #d0d0d0;
+  border - radius: 12px;
+  background: white;
+  transition: all 0.3s ease;
+}
 
-        .upload-area:hover {
-          border-color: #D4A373;
-          background: #fefaf5;
-        }
+        .upload - area:hover {
+  border - color: #D4A373;
+  background: #fefaf5;
+}
 
-        .upload-label {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 3rem 2rem;
-          cursor: pointer;
-          text-align: center;
-        }
+        .upload - label {
+  display: flex;
+  flex - direction: column;
+  align - items: center;
+  justify - content: center;
+  padding: 3rem 2rem;
+  cursor: pointer;
+  text - align: center;
+}
 
-        .upload-icon {
-          font-size: 3.5rem;
-          color: #D4A373;
-          margin-bottom: 1rem;
-        }
+        .upload - icon {
+  font - size: 3.5rem;
+  color: #D4A373;
+  margin - bottom: 1rem;
+}
 
-        .upload-title {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 0.5rem;
-          display: block;
-        }
+        .upload - title {
+  font - size: 1.1rem;
+  font - weight: 600;
+  color: #333;
+  margin - bottom: 0.5rem;
+  display: block;
+}
 
-        .upload-subtitle {
-          font-size: 0.95rem;
-          color: #666;
-          margin-bottom: 0.75rem;
-          display: block;
-        }
+        .upload - subtitle {
+  font - size: 0.95rem;
+  color: #666;
+  margin - bottom: 0.75rem;
+  display: block;
+}
 
-        .upload-format {
-          font-size: 0.85rem;
-          color: #999;
-          background: #f5f5f5;
-          padding: 0.5rem 1rem;
-          border-radius: 20px;
-        }
+        .upload - format {
+  font - size: 0.85rem;
+  color: #999;
+  background: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border - radius: 20px;
+}
 
-        .image-preview-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1rem;
-        }
+        .image - preview - container {
+  display: flex;
+  flex - direction: column;
+  align - items: center;
+  gap: 1rem;
+}
 
-        .image-preview {
-          position: relative;
-          max-width: 400px;
-          width: 100%;
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .image - preview {
+  position: relative;
+  max - width: 400px;
+  width: 100 %;
+  border - radius: 12px;
+  overflow: hidden;
+  box - shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-        .image-preview img {
-          width: 100%;
-          display: block;
-        }
+        .image - preview img {
+  width: 100 %;
+  display: block;
+}
 
-        .remove-image {
-          position: absolute;
-          top: 1rem;
-          right: 1rem;
-          background: #ff4444;
-          color: white;
-          border: none;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.25rem;
-          transition: all 0.3s ease;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+        .remove - image {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #ff4444;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border - radius: 50 %;
+  cursor: pointer;
+  display: flex;
+  align - items: center;
+  justify - content: center;
+  font - size: 1.25rem;
+  transition: all 0.3s ease;
+  box - shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
 
-        .remove-image:hover {
-          background: #cc0000;
-          transform: scale(1.1);
-        }
+        .remove - image:hover {
+  background: #cc0000;
+  transform: scale(1.1);
+}
 
-        .image-info {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          color: #22c55e;
-          font-size: 0.9rem;
-          font-weight: 600;
-        }
+        .image - info {
+  display: flex;
+  align - items: center;
+  gap: 0.5rem;
+  color: #22c55e;
+  font - size: 0.9rem;
+  font - weight: 600;
+}
 
-        .divider-or {
-          text-align: center;
-          position: relative;
-          margin: 1rem 0;
-        }
+        .divider - or {
+  text - align: center;
+  position: relative;
+  margin: 1rem 0;
+}
 
-        .divider-or span {
-          background: white;
-          padding: 0 1rem;
-          color: #999;
-          font-weight: 600;
-          font-size: 0.85rem;
-          position: relative;
-          z-index: 1;
-        }
+        .divider - or span {
+  background: white;
+  padding: 0 1rem;
+  color: #999;
+  font - weight: 600;
+  font - size: 0.85rem;
+  position: relative;
+  z - index: 1;
+}
 
-        .divider-or::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: #e0e0e0;
-        }
+        .divider - or::before {
+  content: '';
+  position: absolute;
+  top: 50 %;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e0e0e0;
+}
 
-        .url-input-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
+        .url - input - wrapper {
+  display: flex;
+  flex - direction: column;
+  gap: 0.5rem;
+}
 
-        .url-input-wrapper label {
-          font-weight: 600;
-          color: #333;
-          font-size: 0.95rem;
-        }
+        .url - input - wrapper label {
+  font - weight: 600;
+  color: #333;
+  font - size: 0.95rem;
+}
 
-        .url-input {
-          padding: 0.875rem;
-          border: 2px solid #e0e0e0;
-          border-radius: 8px;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-        }
+        .url - input {
+  padding: 0.875rem;
+  border: 2px solid #e0e0e0;
+  border - radius: 8px;
+  font - size: 1rem;
+  transition: all 0.3s ease;
+}
 
-        .url-input:focus {
-          outline: none;
-          border-color: #D4A373;
-          box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.1);
-        }
+        .url - input:focus {
+  outline: none;
+  border - color: #D4A373;
+  box - shadow: 0 0 0 3px rgba(212, 163, 115, 0.1);
+}
 
-        .url-input:disabled {
-          background: #f5f5f5;
-          cursor: not-allowed;
-          opacity: 0.6;
-        }
+        .url - input:disabled {
+  background: #f5f5f5;
+  cursor: not - allowed;
+  opacity: 0.6;
+}
 
-        .url-input-wrapper small {
-          color: #999;
-          font-size: 0.85rem;
-        }
+        .url - input - wrapper small {
+  color: #999;
+  font - size: 0.85rem;
+}
 
-        .form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-        }
+        .form - grid {
+  display: grid;
+  grid - template - columns: 1fr 1fr;
+  gap: 1.5rem;
+}
 
-        .form-group.full-width {
-          grid-column: 1 / -1;
-        }
+        .form - group.full - width {
+  grid - column: 1 / -1;
+}
 
-        .form-group label {
-          display: block;
-          margin-bottom: 0.5rem;
-          font-weight: 600;
-          color: #333;
-          font-size: 0.95rem;
-        }
+        .form - group label {
+  display: block;
+  margin - bottom: 0.5rem;
+  font - weight: 600;
+  color: #333;
+  font - size: 0.95rem;
+}
 
         .required {
-          color: #ff4444;
-        }
+  color: #ff4444;
+}
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-          width: 100%;
-          padding: 0.875rem;
-          border: 2px solid #e0e0e0;
-          border-radius: 8px;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-          font-family: inherit;
-        }
+        .form - group input,
+        .form - group select,
+        .form - group textarea {
+  width: 100 %;
+  padding: 0.875rem;
+  border: 2px solid #e0e0e0;
+  border - radius: 8px;
+  font - size: 1rem;
+  transition: all 0.3s ease;
+  font - family: inherit;
+}
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-          outline: none;
-          border-color: #D4A373;
-          box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.1);
-        }
+        .form - group input: focus,
+        .form - group select: focus,
+        .form - group textarea:focus {
+  outline: none;
+  border - color: #D4A373;
+  box - shadow: 0 0 0 3px rgba(212, 163, 115, 0.1);
+}
 
-        .form-group textarea {
-          resize: vertical;
-          min-height: 120px;
-        }
+        .form - group textarea {
+  resize: vertical;
+  min - height: 120px;
+}
 
-        .form-actions {
-          padding: 2rem 2.5rem;
-          background: #f8f9fa;
-          display: flex;
-          gap: 1rem;
-          justify-content: flex-end;
-          border-radius: 0 0 16px 16px;
-        }
+        .form - actions {
+  padding: 2rem 2.5rem;
+  background: #f8f9fa;
+  display: flex;
+  gap: 1rem;
+  justify - content: flex - end;
+  border - radius: 0 0 16px 16px;
+}
 
-        .btn-cancel,
-        .btn-submit {
-          padding: 0.875rem 2rem;
-          border: none;
-          border-radius: 8px;
-          font-weight: 600;
-          font-size: 1rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
+        .btn - cancel,
+        .btn - submit {
+  padding: 0.875rem 2rem;
+  border: none;
+  border - radius: 8px;
+  font - weight: 600;
+  font - size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline - flex;
+  align - items: center;
+  gap: 0.5rem;
+}
 
-        .btn-cancel {
-          background: white;
-          color: #666;
-          border: 2px solid #ddd;
-        }
+        .btn - cancel {
+  background: white;
+  color: #666;
+  border: 2px solid #ddd;
+}
 
-        .btn-cancel:hover:not(:disabled) {
-          background: #f5f5f5;
-          border-color: #999;
-        }
+        .btn - cancel: hover: not(: disabled) {
+  background: #f5f5f5;
+  border - color: #999;
+}
 
-        .btn-submit {
-          background: linear-gradient(135deg, #D4A373 0%, #c59363 100%);
-          color: white;
-          box-shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
-        }
+        .btn - submit {
+  background: linear - gradient(135deg, #D4A373 0 %, #c59363 100 %);
+  color: white;
+  box - shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
+}
 
-        .btn-submit:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(212, 163, 115, 0.4);
-        }
+        .btn - submit: hover: not(: disabled) {
+  transform: translateY(-2px);
+  box - shadow: 0 6px 16px rgba(212, 163, 115, 0.4);
+}
 
-        .btn-submit:disabled,
-        .btn-cancel:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
+        .btn - submit: disabled,
+        .btn - cancel:disabled {
+  opacity: 0.6;
+  cursor: not - allowed;
+}
 
         .spinner {
-          width: 16px;
-          height: 16px;
-          border: 2px solid white;
-          border-top-color: transparent;
-          border-radius: 50%;
-          animation: spin 0.6s linear infinite;
-        }
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border - top - color: transparent;
+  border - radius: 50 %;
+  animation: spin 0.6s linear infinite;
+}
 
-        @keyframes spin {
+@keyframes spin {
           to { transform: rotate(360deg); }
-        }
+}
 
-        @media (max-width: 768px) {
-          .admin-content {
-            margin-left: 70px;
-            padding: 1rem;
-          }
+@media(max - width: 768px) {
+          .admin - content {
+    margin - left: 70px;
+    padding: 1rem;
+  }
 
-          .page-header {
-            flex-direction: column;
-            gap: 1rem;
-          }
+          .page - header {
+    flex - direction: column;
+    gap: 1rem;
+  }
 
-          .form-grid {
-            grid-template-columns: 1fr;
-          }
+          .form - grid {
+    grid - template - columns: 1fr;
+  }
 
-          .form-section {
-            padding: 1.5rem;
-          }
+          .form - section {
+    padding: 1.5rem;
+  }
 
-          .form-actions {
-            padding: 1.5rem;
-            flex-direction: column-reverse;
-          }
+          .form - actions {
+    padding: 1.5rem;
+    flex - direction: column - reverse;
+  }
 
-          .btn-cancel,
-          .btn-submit {
-            width: 100%;
-            justify-content: center;
-          }
-        }
-      `}</style>
+          .btn - cancel,
+          .btn - submit {
+    width: 100 %;
+    justify - content: center;
+  }
+}
+`}</style>
     </div>
   );
 };
